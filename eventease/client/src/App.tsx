@@ -7,6 +7,7 @@ import { DashboardLayout } from './layouts/DashboardLayout';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { LoadingSpinner } from './components/ui';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 /* Route-level code splitting: each page loads its own chunk on demand */
 const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
@@ -59,6 +60,7 @@ export default function App() {
   return (
     <ToastProvider>
       <AuthProvider>
+        <ErrorBoundary>
         <BrowserRouter>
           <ScrollToTop />
           <Suspense fallback={<LoadingSpinner full label="Loading…" />}>
@@ -128,6 +130,7 @@ export default function App() {
           </Routes>
           </Suspense>
         </BrowserRouter>
+      </ErrorBoundary>
       </AuthProvider>
     </ToastProvider>
   );

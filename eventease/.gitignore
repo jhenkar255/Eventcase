@@ -1,12 +1,13 @@
 # Dependencies
 node_modules/
+.eventease/node_modules/
 
 # Build output
 dist/
 build/
 *.tsbuildinfo
 
-# Environment & secrets
+# Environment & secrets (keep .env.example and .env.production)
 .env
 .env.local
 .env.*.local
@@ -20,3 +21,9 @@ npm-debug.log*
 Thumbs.db
 .idea/
 .vscode/
+
+# Netlify
+.netlify/
+
+# Test coverage
+coverage/

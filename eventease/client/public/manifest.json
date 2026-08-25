@@ -1,0 +1,21 @@
+{
+  "name": "EventEase — Plan Your Perfect Indian Event",
+  "short_name": "EventEase",
+  "description": "India's #1 event planning platform. Venues, vendors, budgets, guests — all in one place.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fefdfb",
+  "theme_color": "#ea580c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "events", "shopping"],
+  "lang": "en-IN",
+  "dir": "ltr"
+}
