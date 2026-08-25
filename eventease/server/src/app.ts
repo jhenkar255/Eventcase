@@ -27,7 +27,7 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Security
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' }, contentSecurityPolicy: false }));
 app.use(
   cors({
     origin: env.clientUrl.split(','),
