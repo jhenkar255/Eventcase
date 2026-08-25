@@ -8,7 +8,7 @@ const Img = ({ src, alt, className }: { src?: string; alt: string; className: st
   src ? (
     <img src={src} alt={alt} loading="lazy" className={className} />
   ) : (
-    <div className={`${className} flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200 text-primary-400`}>
+    <div className={`${className} flex items-center justify-center bg-gradient-to-br from-primary-100 to-saffron-100 text-primary-400`}>
       <CalendarDays size={32} />
     </div>
   );
@@ -16,11 +16,11 @@ const Img = ({ src, alt, className }: { src?: string; alt: string; className: st
 export const EventCard = ({ event, onClick }: { event: Event; onClick?: () => void }) => {
   const d = new Date(event.date);
   return (
-    <div className="card-base group overflow-hidden transition hover:shadow-card-hover" onClick={onClick} role={onClick ? 'button' : undefined}>
+    <div className="card-base group overflow-hidden transition hover:shadow-card-hover rangoli-corner" onClick={onClick} role={onClick ? 'button' : undefined}>
       <div className="relative h-40 overflow-hidden">
         <Img src={event.image} alt={event.name} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
         <div className="absolute left-3 top-3">
-          <Badge color="indigo">{event.type}</Badge>
+          <Badge color="amber">{event.type}</Badge>
         </div>
         <div className="absolute bottom-0 right-0 flex h-14 w-14 flex-col items-center justify-center rounded-tl-xl bg-white/95 backdrop-blur">
           <span className="text-lg font-extrabold leading-none text-slate-900">{d.getDate()}</span>
@@ -34,11 +34,11 @@ export const EventCard = ({ event, onClick }: { event: Event; onClick?: () => vo
         <p className="mt-1.5 flex items-center gap-1.5 text-sm text-slate-500">
           <MapPin size={14} className="shrink-0" /> <span className="truncate">{event.location}</span>
         </p>
-        <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3 text-xs">
+        <div className="mt-3 flex items-center justify-between border-t border-saffron-100/50 pt-3 text-xs">
           <span className="flex items-center gap-1 text-slate-500">
             <Users size={13} /> {event.guestCount} guests
           </span>
-          <span className="font-bold text-slate-800">{formatCurrency(event.budget)}</span>
+          <span className="font-bold text-primary-700">{formatCurrency(event.budget)}</span>
         </div>
       </div>
     </div>
@@ -46,10 +46,10 @@ export const EventCard = ({ event, onClick }: { event: Event; onClick?: () => vo
 };
 
 export const VenueCard = ({ venue }: { venue: Venue }) => (
-  <Link to={`/venues/${venue._id}`} className="card-base group block overflow-hidden transition hover:shadow-card-hover" aria-label={`View ${venue.name}`}>
+  <Link to={`/venues/${venue._id}`} className="card-base group block overflow-hidden transition hover:shadow-card-hover rangoli-corner" aria-label={`View ${venue.name}`}>
     <div className="relative h-44 overflow-hidden">
       <Img src={venue.images?.[0]} alt={venue.name} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
-      <div className="absolute bottom-2 left-2 rounded-md bg-white/95 px-2 py-1 text-xs font-bold text-slate-800 shadow-sm backdrop-blur">
+      <div className="absolute bottom-2 left-2 rounded-md bg-white/95 px-2 py-1 text-xs font-bold text-primary-700 shadow-sm backdrop-blur">
         <IndianRupee size={11} className="mb-0.5 inline" />
         {venue.price.toLocaleString('en-IN')} / day
       </div>
@@ -67,7 +67,7 @@ export const VenueCard = ({ venue }: { venue: Venue }) => (
       <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
         <MapPin size={14} className="shrink-0" /> {venue.location}
       </p>
-      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-500">
+      <div className="mt-3 flex items-center justify-between border-t border-saffron-100/50 pt-3 text-xs text-slate-500">
         <span className="flex items-center gap-1">
           <Users size={13} /> Up to {venue.capacity.toLocaleString('en-IN')}
         </span>
@@ -78,14 +78,14 @@ export const VenueCard = ({ venue }: { venue: Venue }) => (
 );
 
 export const VendorCard = ({ vendor }: { vendor: Vendor }) => (
-  <Link to={`/vendors/${vendor._id}`} className="card-base group block overflow-hidden transition hover:shadow-card-hover" aria-label={`View ${vendor.businessName}`}>
-    <div className="relative h-36 overflow-hidden bg-gradient-to-br from-primary-500 to-indigo-600">
+  <Link to={`/vendors/${vendor._id}`} className="card-base group block overflow-hidden transition hover:shadow-card-hover rangoli-corner" aria-label={`View ${vendor.businessName}`}>
+    <div className="relative h-36 overflow-hidden bg-gradient-to-br from-primary-500 to-saffron-600">
       <Img src={vendor.profileImage} alt={vendor.businessName} className="h-full w-full object-cover opacity-80 transition duration-300 group-hover:scale-105" />
       <div className="absolute top-2 left-2">
-        <Badge color="purple">{vendor.category}</Badge>
+        <Badge color="amber">{vendor.category}</Badge>
       </div>
       {vendor.verified && (
-        <div className="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-white/95 px-2 py-1 text-xs font-bold text-blue-700 shadow-sm backdrop-blur">
+        <div className="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-white/95 px-2 py-1 text-xs font-bold text-emerald-700 shadow-sm backdrop-blur">
           <BadgeCheck size={13} /> Verified
         </div>
       )}
@@ -95,9 +95,9 @@ export const VendorCard = ({ vendor }: { vendor: Vendor }) => (
       <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
         <MapPin size={14} className="shrink-0" /> {vendor.location || 'India'}
       </p>
-      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+      <div className="mt-3 flex items-center justify-between border-t border-saffron-100/50 pt-3">
         <RatingStars rating={vendor.rating} size={13} showValue />
-        <span className="text-sm font-bold text-slate-800">from {formatCompactPrice(vendor.startingPrice)}</span>
+        <span className="text-sm font-bold text-primary-700">from {formatCompactPrice(vendor.startingPrice)}</span>
       </div>
     </div>
   </Link>

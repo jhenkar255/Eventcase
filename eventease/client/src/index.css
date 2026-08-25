@@ -7,7 +7,7 @@
     @apply antialiased;
   }
   body {
-    @apply bg-slate-50 text-slate-800 font-sans;
+    @apply bg-ivory-50 text-slate-800 font-sans;
   }
 }
 
@@ -21,6 +21,71 @@
   .card-base {
     @apply rounded-xl border border-slate-200/70 bg-white shadow-card;
   }
+
+  /* Indian mandala-inspired decorative border */
+  .indian-border {
+    position: relative;
+  }
+  .indian-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ea580c, #facc15, #ea580c, #facc15, #ea580c);
+    border-radius: 999px 999px 0 0;
+  }
+
+  /* Rangoli corner decoration */
+  .rangoli-corner {
+    position: relative;
+    overflow: hidden;
+  }
+  .rangoli-corner::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(234,88,12,.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .rangoli-corner::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(250,204,21,.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* Paisley-inspired section divider */
+  .section-divider {
+    background-image: repeating-linear-gradient(
+      90deg,
+      #ea580c 0px,
+      #ea580c 8px,
+      transparent 8px,
+      transparent 12px,
+      #facc15 12px,
+      #facc15 20px,
+      transparent 20px,
+      transparent 24px
+    );
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  /* Marigold garland effect */
+  .marigold-glow {
+    text-shadow: 0 0 20px rgba(234,88,12,.15), 0 0 40px rgba(250,204,21,.1);
+  }
 }
 
 @keyframes toast-in {
@@ -29,4 +94,12 @@
 }
 .animate-toast-in {
   animation: toast-in 0.25s ease-out;
+}
+
+/* Mandala pattern background */
+.bg-mandala {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(234,88,12,.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(250,204,21,.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(16,185,129,.03) 0%, transparent 50%);
 }
