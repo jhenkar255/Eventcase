@@ -8,7 +8,7 @@ import { AuthRequest } from '../middleware/auth';
 
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-export const getVendors = asyncHandler(async (req, res) => {
+export const getVendors = asyncHandler(async (req: AuthRequest, res) => {
   const page = Math.max(1, Number(req.query.page) || 1);
   const limit = Math.min(50, Number(req.query.limit) || 12);
 
@@ -52,7 +52,7 @@ function query_maxPrice(req: { query: Record<string, unknown> }) {
   return req.query.maxPrice;
 }
 
-export const getVendor = asyncHandler(async (req, res) => {
+export const getVendor = asyncHandler(async (req: AuthRequest, res) => {
   const vendor = await Vendor.findById(req.params.id);
   if (!vendor) throw ApiError.notFound('Vendor not found');
 
@@ -139,6 +139,36 @@ export const getVendorStats = asyncHandler(async (req: AuthRequest, res) => {
       upcomingBookings: upcoming.slice(0, 5),
     },
   });
+});
+
+export const getVendorAvailability = asyncHandler(async (req: AuthRequest, res) => {
+  const vendor = await Vendor.findOne({ userId: req.user!.id });
+  if (!vendor) throw ApiError.notFound('Vendor profile not found');
+  res.json({ success: true, data: { availability: vendor.availability } });
+});
+
+export const updateVendorAvailability = asyncHandler(async (req: AuthRequest, res) => {
+  const vendor = await Vendor.findOne({ userId: req.user!.id });
+  if (!vendor) throw ApiError.notFound('Vendor profile not found');
+
+  const { availability } = req.body as { availability: Array<{ day: string; open: boolean; from: string; to: string }> };
+  if (!Array.isArray(availability) || availability.length !== 7) {
+    throw ApiError.badRequest('Availability must contain all 7 days');
+  }
+  for (const a of availability) {
+    if (!a.day) throw ApiError.badRequest('Each entry must have a day');
+    const timeRe = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    if ((a.open && !timeRe.test(a.from)) || (a.open && !timeRe.test(a.to))) {
+      throw ApiError.badRequest('Times must be in HH:MM format');
+    }
+    if (a.open && a.from >= a.to) {
+      throw ApiError.badRequest(`End time must be after start time for ${a.day}`);
+    }
+  }
+
+  vendor.availability = availability;
+  await vendor.save();
+  res.json({ success: true, message: 'Availability updated', data: { availability: vendor.availability } });
 });
 
 export const respondToReview = asyncHandler(async (req: AuthRequest, res) => {

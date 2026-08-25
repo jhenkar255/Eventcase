@@ -18,6 +18,10 @@ router.post('/me/services', protect, authorize('vendor'), validate({ body: servi
 router.put('/me/services/:id', protect, authorize('vendor'), validate({ body: serviceSchema.partial() }), services.updateService);
 router.delete('/me/services/:id', protect, authorize('vendor'), services.deleteService);
 
+// Availability
+router.get('/me/availability', protect, authorize('vendor'), vendors.getVendorAvailability);
+router.put('/me/availability', protect, authorize('vendor'), vendors.updateVendorAvailability);
+
 // Review responses
 router.put('/reviews/:id/respond', protect, authorize('vendor'), vendors.respondToReview);
 

@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models/User';
-import { Vendor } from '../models/Vendor';
 import { asyncHandler } from '../utils/errorHandler';
 import { ApiError } from '../utils/ApiError';
 import { generateToken } from '../utils/jwt';
@@ -34,20 +33,6 @@ export const register = asyncHandler(async (req, res) => {
     password: hashedPassword,
     role,
   });
-
-  // Vendors get a draft vendor profile immediately so they can complete it from the dashboard
-  if (role === 'vendor') {
-    await Vendor.create({
-      userId: user._id,
-      businessName: `${name}'s Services`,
-      category: 'Other',
-      description: '',
-      location: '',
-      phone,
-      email: email.toLowerCase(),
-      verificationStatus: 'pending',
-    });
-  }
 
   const token = generateToken({ id: String(user._id), role: user.role });
 

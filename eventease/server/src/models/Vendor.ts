@@ -14,6 +14,13 @@ export const VENDOR_CATEGORIES: VendorCategory[] = [
   'Invitation Designer', 'Event Equipment', 'Other',
 ];
 
+export interface AvailabilityDay {
+  day: string;
+  open: boolean;
+  from: string;
+  to: string;
+}
+
 export interface IVendor extends Document {
   userId: mongoose.Types.ObjectId;
   businessName: string;
@@ -30,6 +37,7 @@ export interface IVendor extends Document {
   verified: boolean;
   verificationStatus: VerificationStatus;
   status: VendorStatus;
+  availability: AvailabilityDay[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -56,6 +64,25 @@ const vendorSchema = new Schema<IVendor>(
     verified: { type: Boolean, default: false },
     verificationStatus: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending', index: true },
     status: { type: String, enum: ['active', 'suspended'], default: 'active' },
+    availability: {
+      type: [
+        {
+          day: { type: String, required: true },
+          open: { type: Boolean, default: true },
+          from: { type: String, default: '09:00' },
+          to: { type: String, default: '18:00' },
+        },
+      ],
+      default: [
+        { day: 'Monday', open: true, from: '09:00', to: '18:00' },
+        { day: 'Tuesday', open: true, from: '09:00', to: '18:00' },
+        { day: 'Wednesday', open: true, from: '09:00', to: '18:00' },
+        { day: 'Thursday', open: true, from: '09:00', to: '18:00' },
+        { day: 'Friday', open: true, from: '09:00', to: '18:00' },
+        { day: 'Saturday', open: true, from: '09:00', to: '20:00' },
+        { day: 'Sunday', open: true, from: '09:00', to: '20:00' },
+      ],
+    },
   },
   { timestamps: true }
 );

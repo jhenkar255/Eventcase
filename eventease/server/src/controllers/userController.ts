@@ -1,4 +1,5 @@
 import { User } from '../models/User';
+import { Event } from '../models/Event';
 import { asyncHandler } from '../utils/errorHandler';
 import { ApiError } from '../utils/ApiError';
 import { AuthRequest } from '../middleware/auth';

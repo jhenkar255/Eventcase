@@ -33,13 +33,11 @@ const recalcVenueRating = async (venueId: string) => {
   }
 };
 
-export const getReviews = asyncHandler(async (req, res) => {
+export const getReviews = asyncHandler(async (req: AuthRequest, res) => {
   const filter: Record<string, unknown> = {};
 
-  if (!req.user || req.user.role === 'guest') {
-    // public listing only shows visible reviews
-    filter.status = 'visible';
-  }
+  // Public listing only shows visible reviews; authenticated users see visible too
+  filter.status = 'visible';
 
   if (req.query.vendorId && /^[0-9a-fA-F]{24}$/.test(String(req.query.vendorId))) filter.vendorId = req.query.vendorId;
   if (req.query.venueId && /^[0-9a-fA-F]{24}$/.test(String(req.query.venueId))) filter.venueId = req.query.venueId;

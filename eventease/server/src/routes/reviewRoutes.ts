@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as reviews from '../controllers/reviewController';
-import { protect, optionalAuth } from '../middleware/authOptional';
+import { protect } from '../middleware/auth';
+import { optionalAuth } from '../middleware/optionalAuth';
 import { validate, reviewSchema } from '../validators';
 
 const router = Router();

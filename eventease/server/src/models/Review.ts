@@ -46,9 +46,10 @@ const reviewSchema = new Schema<IReview>(
 reviewSchema.index({ bookingId: 1 }, { unique: true });
 
 reviewSchema.pre(/^find/, function (next) {
-  const filter = this.getFilter();
+  const query = this as unknown as mongoose.Query<unknown, unknown>;
+  const filter = query.getFilter();
   if (!('status' in filter)) {
-    this.where({ status: { $ne: 'hidden' } });
+    query.where({ status: { $ne: 'hidden' } });
   }
   next();
 });

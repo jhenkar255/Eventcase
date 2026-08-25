@@ -53,6 +53,5 @@ const venueSchema = new Schema<IVenue>(
 );
 
 venueSchema.index({ location: 1, price: 1 });
-venueSchema.index({ capacity: 1 });
 
 export const Venue = mongoose.model<IVenue>('Venue', venueSchema);

@@ -3,7 +3,7 @@ import { Guest } from '../models/Guest';
 import { Task } from '../models/Task';
 import { Expense } from '../models/Expense';
 import { Booking } from '../models/Booking';
-import { asyncHandler, notFoundHandler as nf } from '../utils/errorHandler';
+import { asyncHandler } from '../utils/errorHandler';
 import { ApiError } from '../utils/ApiError';
 import { AuthRequest } from '../middleware/auth';
 
@@ -34,7 +34,7 @@ export const getEvents = asyncHandler(async (req: AuthRequest, res) => {
 
 export const getEvent = asyncHandler(async (req: AuthRequest, res) => {
   const event = await Event.findById(parseId(req.params.id));
-  if (!event) throw nf('Event not found');
+  if (!event) throw ApiError.notFound('Event not found');
   if (String(event.userId) !== req.user!.id && req.user!.role !== 'admin') {
     throw ApiError.forbidden('You can only view your own events');
   }
@@ -81,7 +81,7 @@ export const createEvent = asyncHandler(async (req: AuthRequest, res) => {
 
 export const updateEvent = asyncHandler(async (req: AuthRequest, res) => {
   const event = await Event.findById(parseId(req.params.id));
-  if (!event) throw nf('Event not found');
+  if (!event) throw ApiError.notFound('Event not found');
   if (String(event.userId) !== req.user!.id && req.user!.role !== 'admin') {
     throw ApiError.forbidden('You can only modify your own events');
   }
@@ -94,7 +94,7 @@ export const updateEvent = asyncHandler(async (req: AuthRequest, res) => {
 
 export const deleteEvent = asyncHandler(async (req: AuthRequest, res) => {
   const event = await Event.findById(parseId(req.params.id));
-  if (!event) throw nf('Event not found');
+  if (!event) throw ApiError.notFound('Event not found');
   if (String(event.userId) !== req.user!.id && req.user!.role !== 'admin') {
     throw ApiError.forbidden('You can only delete your own events');
   }

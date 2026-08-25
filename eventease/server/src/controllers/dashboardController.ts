@@ -63,7 +63,7 @@ export const getDashboard = asyncHandler(async (req: AuthRequest, res) => {
       },
       upcomingEvents: upcomingEvents.slice(0, 4),
       recentBookings: bookings.slice(0, 5),
-      pendingTasks,
+      pendingTasks: tasks,
       budgetSummary: buildBudgetSummary(events.slice(0, 5), expenses),
       rsvpStats,
       notifications,

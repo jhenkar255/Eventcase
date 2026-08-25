@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 export type UserRole = 'customer' | 'vendor' | 'admin';
 export type UserStatus = 'active' | 'suspended' | 'deleted';
@@ -36,10 +37,7 @@ const userSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-userSchema.index({ email: 1 }, { unique: true });
-
 userSchema.methods.comparePassword = async function (candidate: string): Promise<boolean> {
-  const bcrypt = await import('bcryptjs');
   return bcrypt.compare(candidate, this.password);
 };
 

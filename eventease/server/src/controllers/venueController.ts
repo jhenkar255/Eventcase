@@ -116,7 +116,7 @@ export const getVenueAvailability = asyncHandler(async (req, res) => {
   res.json({
     success: true,
     data: {
-      availability: Object.fromEntries(venue.availability),
+      availability: Object.fromEntries(venue.availability instanceof Map ? venue.availability : []),
       bookedDates: bookings.map((b) => b.date),
     },
   });
